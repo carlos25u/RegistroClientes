@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+@using RegistroClientes.BLL
+@using RegistroClientes.Model
+@inject ClientesBLL MyService
+
+
+
+<div class="container">
+    <div class="d-flex justify-content-lg-start">
+
+        <div class="p-1 col-12 col-md-12">
+            <label class="form-check-label">Nombre</label>
+            <input type="text" class="form-control" @bind="cliente.Nombre" placeholder="Nombre" />
+        </div>
+
+        <div class="p-1 col-12 col-md-12">
+            <label class="form-check-label">Credito</label>
+            <input type="number" class="form-control" @bind="cliente.Balance" placeholder="Balance" />
+        </div>
+
+        <div class="p-1">
+            <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
+        </div>
+
+      
+    </div>
+</div>
+
+@code {
+
+    public RegistroClientes.Model.Clientes cliente = new RegistroClientes.Model.Clientes();
+
+
+    public async Task Guardar()
+    {
+        await MyService.Guardar(cliente);
+        cliente = new RegistroClientes.Model.Clientes();
+    }
+
+}

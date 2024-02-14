@@ -1,0 +1,98 @@
+﻿@page "/counter"
+
+@rendermode InteractiveServer
+@using RegistroClientes.BLL
+@using RegistroClientes.Model
+@inject ClientesBLL MyService
+
+@inject IModalService Modal
+
+
+<PageTitle>Clientes</PageTitle>
+
+<div class="container">
+
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" @onclick="OpenModal">Nuevo</button>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-start align-items-center">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Balance</th>
+                    <th class="text-end">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in clientes)
+                {
+                    <tr>
+                        <td>@item.ClienteId</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Balance</td>
+                        <td class="text-end">
+                            <button class="btn btn-danger" @onclick="()=>Eliminar(item.ClienteId)">Eliminar</button>
+                            <button class="btn btn-primary" @onclick="()=>Editar(item.ClienteId)">Editar</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+@code {
+
+    public RegistroClientes.Model.Clientes cliente = new RegistroClientes.Model.Clientes();
+
+    public List<RegistroClientes.Model.Clientes> clientes;
+
+
+    public async Task Guardar()
+    {
+        await MyService.Guardar(cliente);
+        cliente = new RegistroClientes.Model.Clientes();
+        await list();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await list();
+    }
+
+    public async Task list()
+    {
+        clientes = await MyService.ListadoAsync();
+    }
+
+    public async Task Eliminar(int id)
+    {
+        await MyService.Eliminar(id);
+        await list();
+    }
+
+    public async Task Editar(int id)
+    {
+        cliente = await MyService.Buscar(id);
+    }
+    //Abrir modal
+
+    void OpenModal()
+    {
+        var options = new ModalOptions()
+            {
+                DisableBackgroundCancel = true,
+                HideCloseButton = true,
+            };
+
+        Modal.Show<Clientes>("Registrar Clientes", options);
+    }
+}
