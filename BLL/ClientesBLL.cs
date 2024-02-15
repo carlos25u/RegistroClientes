@@ -16,7 +16,7 @@ namespace RegistroClientes.BLL
             cmd.Parameters.AddWithValue("@Nombre", cliente.Nombre);
             cmd.Parameters.AddWithValue("@Balance", cliente.Balance);
             cmd.Parameters.Add("@ValorRetorno", SqlDbType.Int);
-            cmd.Parameters["@ValorRetorno"].Direction = ParameterDirection.Output; //se debe especificar que es output
+            cmd.Parameters["@ValorRetorno"].Direction = ParameterDirection.Output; 
             return DataAcces.SaveSPIntValueReturn("@ValorRetorno", ref cmd);
         }
 
