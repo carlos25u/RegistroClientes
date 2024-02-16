@@ -9,11 +9,16 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="RegistroClientes.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet />
+    <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+
+    <HeadOutlet @rendermode="RenderMode.InteractiveServer" />
+
+s
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="RenderMode.InteractiveServer" />
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 

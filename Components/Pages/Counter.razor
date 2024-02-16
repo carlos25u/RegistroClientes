@@ -1,19 +1,19 @@
 ﻿@page "/counter"
+@attribute [StreamRendering]
 
-@rendermode InteractiveServer
 @using RegistroClientes.BLL
 @using RegistroClientes.Model
 @inject ClientesBLL MyService
-
-@inject IModalService Modal
+@inject Blazored.Modal.Services.IModalService Modal
 
 
 <PageTitle>Clientes</PageTitle>
 
+
 <div class="container">
 
     <div class="d-flex justify-content-end">
-        <button class="btn btn-primary" @onclick="OpenModal">Nuevo</button>
+        <button class="btn btn-primary" @onclick="ShowModal">Nuevo</button>
     </div>
 
     <div class="d-flex flex-wrap justify-content-start align-items-center">
@@ -84,15 +84,14 @@
         cliente = await MyService.Buscar(id);
     }
     //Abrir modal
-
-    void OpenModal()
+    private void ShowModal()
     {
-        var options = new ModalOptions()
+        var options = new Blazored.Modal.ModalOptions()
             {
-                DisableBackgroundCancel = true,
                 HideCloseButton = true,
+                DisableBackgroundCancel = true,
             };
 
-        Modal.Show<Clientes>("Registrar Clientes", options);
+        Modal.Show<ModalClientes>("Title", options);
     }
 }

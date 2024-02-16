@@ -1,5 +1,6 @@
 using Blazored.Modal;
 using RegistroClientes.Components;
+using RegistroClientes.Components.Pages;
 
 namespace RegistroClientes
 {
@@ -13,12 +14,11 @@ namespace RegistroClientes
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            builder.Services.AddBlazoredModal();
-
-
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<RegistroClientes.BLL.ClientesBLL>();
+
+            builder.Services.AddBlazoredModal();
 
 
             var app = builder.Build();
@@ -36,6 +36,7 @@ namespace RegistroClientes
 
             app.UseStaticFiles();
             app.UseAntiforgery();
+            app.UseStaticFiles();
 
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
